@@ -1,5 +1,13 @@
 import logo from "../assets/logo.jpg";
+
+import { ModalCtx } from "../store/ModalCtx";
+import { useContext } from "react";
+
 export default function Header() {
+  const { setNewJournal } = useContext(ModalCtx);
+  const handleAddEntryClick = () => {
+    setNewJournal();
+  };
   return (
     <header>
       <div className="flex justify-between p-4 bg-blue-950">
@@ -15,12 +23,13 @@ export default function Header() {
           </h1>
         </div>
         <div className="flex gap-5 items-center">
-          <button className="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">
-            {" "}
+          <button
+            className="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600"
+            onClick={handleAddEntryClick}
+          >
             + Add Entry
           </button>
           <button className="border px-4 py-2 text-white rounded hover:text-stone-200">
-            {" "}
             Login / Sign Up
           </button>
         </div>

@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Header from "./components/header";
 import NewJournal from "./Modals/NewJournal";
+import ModalCtxProvider from "./store/ModalCtx";
 function App() {
+  // console.log("herer");
+
   return (
     <>
-      <div className="min-h-screen bg-gray-100">
-        <Header></Header>
+      <ModalCtxProvider>
+        <div className="min-h-screen bg-gray-100">
+          <Header></Header>
 
-        <NewJournal></NewJournal>
-      </div>
+          <NewJournal></NewJournal>
+        </div>
+      </ModalCtxProvider>
     </>
   );
 }

@@ -1,5 +1,7 @@
 import Modal from "./Modal";
-import { useActionState } from "react";
+import { useActionState, useContext } from "react";
+import { ModalCtx } from "../store/ModalCtx";
+
 const submitEntry = (prevState, formData) => {
   const title = formData.get("title");
   const content = formData.get("content");
@@ -7,12 +9,16 @@ const submitEntry = (prevState, formData) => {
 };
 export default function NewJournal({}) {
   const [messages, formAction, isPending] = useActionState(submitEntry, null);
-
+  const { modal, clear } = useContext(ModalCtx);
+  console.log(modal);
+  const handleCancelClick = () => {
+    clear();
+  };
   return (
-    <Modal open={true}>
+    <Modal open={modal === "NEW_JOURNAL"}>
       <form action={formAction} className="p-0">
         <div className="mt-5">
-          <label htmlFor="title" className="\">
+          <label htmlFor="title" className="">
             Title
           </label>
           <input
@@ -40,7 +46,7 @@ export default function NewJournal({}) {
 
         <div className="mt-10 flex w-full">
           <button
-            href="/<%= note.id %>"
+            onClick={handleCancelClick}
             className="w-1/2 rounded mx-4 text-center bg-gray-500 py-3 text-white hover:bg-gray-600"
           >
             CANCEL
