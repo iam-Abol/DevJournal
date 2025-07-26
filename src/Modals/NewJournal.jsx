@@ -1,0 +1,58 @@
+import Modal from "./Modal";
+import { useActionState } from "react";
+const submitEntry = (prevState, formData) => {
+  const title = formData.get("title");
+  const content = formData.get("content");
+  console.log(title + content);
+};
+export default function NewJournal({}) {
+  const [messages, formAction, isPending] = useActionState(submitEntry, null);
+
+  return (
+    <Modal open={true}>
+      <form action={formAction} className="p-0">
+        <div className="mt-5">
+          <label htmlFor="title" className="\">
+            Title
+          </label>
+          <input
+            type="text"
+            className="block w-full rounded border border-gray-300 p-2 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:outline-none"
+            placeholder="Title"
+            name="title"
+            required
+          />
+        </div>
+
+        <div className="mt-5">
+          <label for="content" className="">
+            {" "}
+            Note :{" "}
+          </label>
+          <textarea
+            name="content"
+            id="content"
+            rows="6"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-transparent focus:ring-1 focus:ring-gray-200 focus:outline-none text-lg p-3"
+          ></textarea>
+        </div>
+
+        <div className="mt-10 flex w-full">
+          <button
+            href="/<%= note.id %>"
+            className="w-1/2 rounded mx-4 text-center bg-gray-500 py-3 text-white hover:bg-gray-600"
+          >
+            CANCEL
+          </button>
+          <button
+            className="w-1/2 mx-4 rounded bg-green-500 py-3 text-white hover:bg-green-600"
+            type="submit"
+          >
+            SAVE
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
