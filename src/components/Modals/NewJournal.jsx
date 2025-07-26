@@ -1,22 +1,28 @@
 import Modal from "./Modal";
 import { useActionState, useContext } from "react";
 import { ModalCtx } from "../store/ModalCtx";
+import { JournalContext } from "../store/JournalContext";
 
-const submitEntry = (prevState, formData) => {
-  const title = formData.get("title");
-  const content = formData.get("content");
-  console.log(title + content);
-};
 export default function NewJournal({}) {
-  const [messages, formAction, isPending] = useActionState(submitEntry, null);
   const { modal, clear } = useContext(ModalCtx);
-  console.log(modal);
+  // console.log(modal);
+  const { ADD_ENTRY } = useContext(JournalContext);
+  /////////////////////////////////////////
+  const submitEntry = (prevState, formData) => {
+    const title = formData.get("title");
+    const content = formData.get("content");
+    console.log(title + content);
+    ADD_ENTRY({ title, content });
+  };
+
   const handleCancelClick = () => {
     clear();
   };
+
+  const [messages, formAction, isPending] = useActionState(submitEntry, null);
   return (
     <Modal open={modal === "NEW_JOURNAL"}>
-      <form action={formAction} className="p-0">
+      <form action={formAction} onSubmit={() => clear()} className="p-0">
         <div className="mt-5">
           <label htmlFor="title" className="">
             Title

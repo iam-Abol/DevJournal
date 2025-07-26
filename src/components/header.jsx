@@ -1,6 +1,6 @@
 import logo from "../assets/logo.jpg";
 
-import { ModalCtx } from "../store/ModalCtx";
+import { ModalCtx } from "./store/ModalCtx";
 import { useContext } from "react";
 
 export default function Header() {
