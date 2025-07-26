@@ -1,8 +1,12 @@
-import Sidebar from "./components/Sidebar";
-import { useState } from "react";
-import Goals from "./components/Goals/Goals";
+import Header from "./components/header";
 function App() {
-  return <></>;
+  return (
+    <>
+      <div className="min-h-screen bg-gray-100">
+        <Header></Header>
+      </div>
+    </>
+  );
 }
 
 export default App;
