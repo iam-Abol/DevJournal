@@ -25,7 +25,7 @@ export default function NewJournal({}) {
         </div>
 
         <div className="mt-5">
-          <label for="content" className="">
+          <label htmlFor="content" className="">
             {" "}
             Note :{" "}
           </label>
