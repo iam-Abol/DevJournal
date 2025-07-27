@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { JournalContext } from "../store/JournalContext";
 export default function Journal({ journal }) {
+  const { DELETE_ENTRY } = useContext(JournalContext);
+  const handleDeleteClick = () => {
+    DELETE_ENTRY(journal.id);
+  };
   return (
     <div className="bg-white rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition">
       <div className="flex justify-between ">
@@ -10,7 +16,10 @@ export default function Journal({ journal }) {
           <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm">
             Edit
           </button>
-          <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+          <button
+            onClick={handleDeleteClick}
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+          >
             Delete
           </button>
         </div>

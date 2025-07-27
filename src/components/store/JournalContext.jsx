@@ -28,17 +28,24 @@ const journalReducer = (state, action) => {
         ...action.journal,
       },
     ];
-
+    return { ...state, journals: updatedJournals };
+  }
+  if (action.type === "DELETE_ENTRY") {
+    let updatedJournals = [...state.journals];
+    updatedJournals = updatedJournals.filter(
+      (journal) => journal.id != action.id
+    );
     return { ...state, journals: updatedJournals };
   }
 };
 export default function JournalContextProvider({ children }) {
   const [state, dispatch] = useReducer(journalReducer, initialState);
   const ADD_ENTRY = (journal) => dispatch({ type: "ADD_ENTRY", journal });
+  const DELETE_ENTRY = (id) => dispatch({ type: "DELETE_ENTRY", id });
   console.log(state);
 
   return (
-    <JournalContext.Provider value={{ ADD_ENTRY, ...state }}>
+    <JournalContext.Provider value={{ ADD_ENTRY, DELETE_ENTRY, ...state }}>
       {children}
     </JournalContext.Provider>
   );
