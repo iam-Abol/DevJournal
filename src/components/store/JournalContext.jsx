@@ -22,7 +22,11 @@ const journalReducer = (state, action) => {
   if (action.type === "ADD_ENTRY") {
     const updatedJournals = [
       ...state.journals,
-      { id: new Date().toISOString(), ...action.journal },
+      {
+        id: new Date().toISOString(),
+        createdAt: new Date().toLocaleString(),
+        ...action.journal,
+      },
     ];
 
     return { ...state, journals: updatedJournals };
