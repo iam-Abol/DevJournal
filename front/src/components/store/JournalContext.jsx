@@ -20,11 +20,10 @@ const initialState = {
   error: null,
 };
 const journalReducer = (state, action) => {
-  console.log("hrere", action);
-
+  if (action.type === "SET_LOADING") {
+    return { ...state, loading: action.loading };
+  }
   if (action.type === "SET_JOURNALS") {
-    console.log("hrer");
-
     return { ...state, journals: action.journals };
   }
   if (action.type === "ADD_ENTRY") {
@@ -48,16 +47,18 @@ const journalReducer = (state, action) => {
 };
 export default function JournalContextProvider({ children }) {
   const [state, dispatch] = useReducer(journalReducer, initialState);
+  console.log(state.loading);
+
   const ADD_ENTRY = (journal) => dispatch({ type: "ADD_ENTRY", journal });
   const DELETE_ENTRY = (id) => dispatch({ type: "DELETE_ENTRY", id });
   const SET_JOURNALS = (journals) =>
     dispatch({ type: "SET_JOURNALS", journals });
-
+  const SET_LOADING = (loading) => dispatch({ type: "SET_LOADING", loading });
   // console.log(state);
 
   return (
     <JournalContext.Provider
-      value={{ ADD_ENTRY, DELETE_ENTRY, SET_JOURNALS, ...state }}
+      value={{ ADD_ENTRY, DELETE_ENTRY, SET_JOURNALS, SET_LOADING, ...state }}
     >
       {children}
     </JournalContext.Provider>
