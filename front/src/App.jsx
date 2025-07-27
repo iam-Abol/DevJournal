@@ -1,9 +1,9 @@
-import { useState } from "react";
-import Header from "./components/header";
-import NewJournal from "./components/Modals/NewJournal";
+import { useEffect, useContext } from "react";
+
 import ModalCtxProvider from "./components/store/ModalCtx";
 import JournalContextProvider from "./components/store/JournalContext";
-import JournalList from "./components/Journal/JournalList";
+
+import MainApp from "./components/MainApp";
 function App() {
   // console.log("herer");
 
@@ -11,11 +11,7 @@ function App() {
     <>
       <JournalContextProvider>
         <ModalCtxProvider>
-          <div className="min-h-screen bg-gray-100">
-            <Header></Header>
-            <JournalList></JournalList>
-            <NewJournal></NewJournal>
-          </div>
+          <MainApp />
         </ModalCtxProvider>
       </JournalContextProvider>
     </>

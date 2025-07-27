@@ -3,7 +3,7 @@ import { JournalContext } from "../store/JournalContext";
 export default function Journal({ journal }) {
   const { DELETE_ENTRY } = useContext(JournalContext);
   const handleDeleteClick = () => {
-    DELETE_ENTRY(journal.id);
+    DELETE_ENTRY(journal._id);
   };
   return (
     <div className="bg-white rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition">
