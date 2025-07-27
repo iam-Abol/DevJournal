@@ -3,6 +3,7 @@ import NewJournal from "./Modals/NewJournal";
 import JournalList from "./Journal/JournalList";
 import { JournalContext } from "./store/JournalContext";
 import { useContext, useEffect } from "react";
+import Spinner from "./UI/Spinner";
 
 export default function MainApp(params) {
   const { SET_JOURNALS, SET_LOADING, loading } = useContext(JournalContext);
@@ -23,7 +24,7 @@ export default function MainApp(params) {
     fetchJournals();
   }, []);
 
-  if (loading) return <h1>Loading . . . . .</h1>;
+  if (loading) return <Spinner />;
 
   return (
     <>
