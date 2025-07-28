@@ -47,7 +47,7 @@ const journalReducer = (state, action) => {
 };
 export default function JournalContextProvider({ children }) {
   const [state, dispatch] = useReducer(journalReducer, initialState);
-  console.log(state.loading);
+  // console.log(state.loading);
 
   const ADD_ENTRY = (journal) => dispatch({ type: "ADD_ENTRY", journal });
   const DELETE_ENTRY = (id) => dispatch({ type: "DELETE_ENTRY", id });

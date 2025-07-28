@@ -1,9 +1,11 @@
 const express = require("express");
+
 const app = express();
 const mongoose = require("mongoose");
 const journalRoutes = require("./Routes/journal");
 const cors = require("cors");
 app.use(cors());
+app.use(express.json());
 
 app.use("/api/journals", journalRoutes);
 
