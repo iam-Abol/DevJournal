@@ -3,6 +3,9 @@ import { JournalContext } from "../store/JournalContext";
 export default function Journal({ journal }) {
   const { DELETE_ENTRY } = useContext(JournalContext);
   const handleDeleteClick = () => {
+    console.log("here n delete");
+    console.log(journal);
+
     DELETE_ENTRY(journal._id);
   };
   return (

@@ -27,20 +27,13 @@ const journalReducer = (state, action) => {
     return { ...state, journals: action.journals };
   }
   if (action.type === "ADD_ENTRY") {
-    const updatedJournals = [
-      ...state.journals,
-      {
-        id: new Date().toISOString(),
-        createdAt: new Date().toLocaleString(),
-        ...action.journal,
-      },
-    ];
+    const updatedJournals = [...state.journals, action.journal];
     return { ...state, journals: updatedJournals };
   }
   if (action.type === "DELETE_ENTRY") {
     let updatedJournals = [...state.journals];
     updatedJournals = updatedJournals.filter(
-      (journal) => journal.id != action.id
+      (journal) => journal._id != action._id
     );
     return { ...state, journals: updatedJournals };
   }
@@ -50,7 +43,7 @@ export default function JournalContextProvider({ children }) {
   // console.log(state.loading);
 
   const ADD_ENTRY = (journal) => dispatch({ type: "ADD_ENTRY", journal });
-  const DELETE_ENTRY = (id) => dispatch({ type: "DELETE_ENTRY", id });
+  const DELETE_ENTRY = (_id) => dispatch({ type: "DELETE_ENTRY", _id });
   const SET_JOURNALS = (journals) =>
     dispatch({ type: "SET_JOURNALS", journals });
   const SET_LOADING = (loading) => dispatch({ type: "SET_LOADING", loading });

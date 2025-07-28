@@ -6,13 +6,30 @@ import { JournalContext } from "../store/JournalContext";
 export default function NewJournal({}) {
   const { modal, clear } = useContext(ModalCtx);
   // console.log(modal);
-  const { ADD_ENTRY } = useContext(JournalContext);
+  const { ADD_ENTRY, DELETE_ENTRY } = useContext(JournalContext);
   /////////////////////////////////////////
-  const submitEntry = (prevState, formData) => {
+  const submitEntry = async (prevState, formData) => {
     const title = formData.get("title");
     const content = formData.get("content");
+    const _id = new Date().toISOString();
+    const createdAt = new Date().toLocaleString();
     console.log(title + content);
-    ADD_ENTRY({ title, content });
+    ADD_ENTRY({ title, content, _id, createdAt });
+    try {
+      const res = await fetch("http://localhost:3000/api/journals", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, content }),
+      });
+      if (!res.ok) throw new Error("failed to add ::  / ?");
+      const realJournal = await res.json();
+      DELETE_ENTRY(_id);
+      ADD_ENTRY(realJournal);
+    } catch (err) {
+      DELETE_ENTRY(id);
+    }
   };
 
   const handleCancelClick = () => {

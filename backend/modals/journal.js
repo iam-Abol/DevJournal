@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const JournalSchema = new mongoose.Schema({
   title: { type: String, require: true },
   content: String,
-  createdAi: {
+  createdAt: {
     type: String,
     default: () => new Date().toLocaleString(),
   },
