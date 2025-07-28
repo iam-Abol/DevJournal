@@ -28,7 +28,8 @@ export default function NewJournal({}) {
       DELETE_ENTRY(_id);
       ADD_ENTRY(realJournal);
     } catch (err) {
-      DELETE_ENTRY(id);
+      DELETE_ENTRY(_id);
+      SET_ERROR(err.message);
     }
   };
 
