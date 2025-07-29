@@ -15,7 +15,7 @@ const authSlice = createSlice({
       state.userId = action.payload.id;
     },
     signup(state) {
-      state.authMode = "signup";
+      state.authMode = "login";
     },
     logout(state) {
       state.authMode = "login";

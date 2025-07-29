@@ -1,4 +1,28 @@
+import { useActionState } from "react";
+import { useContext } from "react";
+import { JournalContext } from "../store/JournalContext";
+import {} from "react-redux";
 export default function Signup({}) {
+  const { SET_ERROR } = useContext(JournalContext);
+  const action = async (state, fn) => {
+    const email = fn.get("email");
+    const username = fn.get("username");
+
+    const password = fn.get("password");
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username, password }),
+      });
+      if (!res.ok) throw new Error("failed to signup");
+    } catch (err) {
+      SET_ERROR(err.message);
+    }
+  };
+  const [state, formAction] = useActionState(action, null);
   return (
     <>
       <div className="bg-blue">
@@ -12,7 +36,7 @@ export default function Signup({}) {
                 Free forever. No payment needed.
               </h3> */}
             </div>
-            <form>
+            <form action={formAction}>
               <div className="mt-5">
                 <label htmlFor="email" className="">
                   Email :
