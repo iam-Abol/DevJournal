@@ -1,4 +1,37 @@
+import { useActionState } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/auth";
+import { JournalContext } from "../store/JournalContext";
+import { useContext } from "react";
 function Login({}) {
+  const dispatch = useDispatch();
+  const { SET_ERROR } = useContext(JournalContext);
+  const action = async (state, fd) => {
+    const password = fd.get("password");
+    const email = fd.get("email");
+    console.log(email, password);
+
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) throw new Error("failed to login");
+      dispatch(
+        authActions.login({ username: res.username, userId: res.userId })
+      );
+    } catch (err) {
+      console.log("front login error");
+      console.log(err.message);
+
+      SET_ERROR(err.message);
+    }
+  };
+  const [state, formAction] = useActionState(action, null);
+
   return (
     <div className="bg-blue">
       <div className="flex min-h-screen bg-white">
@@ -6,7 +39,7 @@ function Login({}) {
           <div className="p-0 text-center font-sans">
             <h1 className="text-3xl font-medium text-gray-800">WELCOME BACK</h1>
           </div>
-          <form action="/login" method="post" className="p-0">
+          <form action={formAction}>
             <div className="mt-5">
               <label for="email" className="">
                 Email :

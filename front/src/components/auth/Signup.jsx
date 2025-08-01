@@ -6,7 +6,7 @@ import { authActions } from "../store/auth";
 import { useDispatch } from "react-redux";
 export default function Signup({}) {
   const { SET_ERROR } = useContext(JournalContext);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const action = async (state, fn) => {
     const email = fn.get("email");
     const username = fn.get("username");
@@ -21,12 +21,13 @@ export default function Signup({}) {
         body: JSON.stringify({ email, username, password }),
       });
       if (!res.ok) throw new Error("failed to signup");
+      dispatch(authActions.signup);
     } catch (err) {
       SET_ERROR(err.message);
     }
   };
   const handleLoginpage = () => {
-    dispath(authActions.signup());
+    dispatch(authActions.signup());
   };
   const [state, formAction] = useActionState(action, null);
   return (

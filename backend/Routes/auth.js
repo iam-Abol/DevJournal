@@ -22,7 +22,26 @@ router.post("/signup", async (req, res, next) => {
     res.status(500).json({ message: "failed to craete user" });
   }
 });
-router.post('/login',(req,res,next)=>{
-  
-})
+router.post("/login", async (req, res, next) => {
+  const { password, email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(401).json({ error: "Invalid username or password" });
+
+    res.status(200).json({
+      message: "Login successful",
+      username: user.username,
+      userId: user._id,
+    });
+  } catch (error) {
+    console.log("login error");
+
+    res.status(500).json({ message: "failed to login user" + error.message });
+  }
+});
 module.exports = router;
