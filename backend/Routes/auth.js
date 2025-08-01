@@ -22,4 +22,7 @@ router.post("/signup", async (req, res, next) => {
     res.status(500).json({ message: "failed to craete user" });
   }
 });
+router.post('/login',(req,res,next)=>{
+  
+})
 module.exports = router;

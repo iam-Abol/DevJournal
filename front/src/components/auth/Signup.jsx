@@ -1,9 +1,12 @@
 import { useActionState } from "react";
 import { useContext } from "react";
 import { JournalContext } from "../store/JournalContext";
-import {} from "react-redux";
+import { authActions } from "../store/auth";
+
+import { useDispatch } from "react-redux";
 export default function Signup({}) {
   const { SET_ERROR } = useContext(JournalContext);
+  const dispath = useDispatch();
   const action = async (state, fn) => {
     const email = fn.get("email");
     const username = fn.get("username");
@@ -21,6 +24,9 @@ export default function Signup({}) {
     } catch (err) {
       SET_ERROR(err.message);
     }
+  };
+  const handleLoginpage = () => {
+    dispath(authActions.signup());
   };
   const [state, formAction] = useActionState(action, null);
   return (
@@ -82,7 +88,10 @@ export default function Signup({}) {
               </div>
             </form>
             <div className="flex justify-center">
-              <button className="block  p-5 text-center text-gray-800  text-xs ">
+              <button
+                onClick={handleLoginpage}
+                className="block  p-5 text-center text-gray-800  text-xs "
+              >
                 Already have an account?
               </button>
             </div>
