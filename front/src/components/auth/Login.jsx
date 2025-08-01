@@ -17,6 +17,7 @@ function Login({}) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
       if (!res.ok) throw new Error("failed to login");
@@ -41,7 +42,7 @@ function Login({}) {
           </div>
           <form action={formAction}>
             <div className="mt-5">
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 Email :
               </label>
               <input
@@ -53,7 +54,7 @@ function Login({}) {
             </div>
 
             <div className="mt-5">
-              <label for="email" className="">
+              <label htmlFor="email" className="">
                 Password :
               </label>
               <input

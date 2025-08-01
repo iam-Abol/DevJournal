@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../modals/User");
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("./middlewares/authMiddleware");
 router.post("/signup", async (req, res, next) => {
   const { email, username, password } = req.body;
   try {
@@ -33,6 +35,18 @@ router.post("/login", async (req, res, next) => {
     if (!isMatch)
       return res.status(401).json({ error: "Invalid username or password" });
 
+    const token = jwt.sign(
+      { userId: user._id, username: user.username },
+      "secretsecretsecret",
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.cookie("token", token, {
+      httpOnly: true,
+
+      maxAge: 1 * 60 * 60 * 1000, // 7 days
+    });
     res.status(200).json({
       message: "Login successful",
       username: user.username,
@@ -43,5 +57,9 @@ router.post("/login", async (req, res, next) => {
 
     res.status(500).json({ message: "failed to login user" + error.message });
   }
+});
+router.get("/isLoggedIn", authMiddleware, (req, res, next) => {
+  // res.send(req.cookies);
+  res.status(200).json({ username: req.username, userId: req.userId });
 });
 module.exports = router;
