@@ -15,6 +15,7 @@ const router = createBrowserRouter([
         element: <JournalList></JournalList>,
       },
     ],
+    errorElement: <Error msg={"404 page not found "} />,
   },
 ]);
 export default function MainApp(params) {
