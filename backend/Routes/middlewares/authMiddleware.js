@@ -1,16 +1,17 @@
 const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
+  // console.log(token);
 
   if (!token) return res.status(401).json({ message: "not authenticated" });
   try {
-    console.log("here in decoing");
+    // console.log("here in decoing");
 
     const decoded = jwt.verify(token, "secretsecretsecret");
     req.userId = decoded.userId;
     req.username = decoded.username;
-    console.log("here");
+    // console.log("here");
+    // console.log(req.userId);
 
     next();
   } catch (error) {

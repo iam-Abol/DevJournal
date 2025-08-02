@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const Journal = require("../modals/journal");
-router.get("/", async (req, res, next) => {
+const { Journal } = require("../modals/journal");
+const User = require("../modals/User");
+const authMiddleware = require("./middlewares/authMiddleware");
+router.get("/", authMiddleware, async (req, res, next) => {
   try {
-    const journals = await Journal.find().sort({ createdAt: -1 });
+    const user = await User.findById(req.userId).populate("journals");
+    console.log(user);
+
+    const journals = user.journals;
     res.status(200).json(journals);
   } catch (error) {
     console.error("Error fetching journals:", error);
@@ -11,7 +16,7 @@ router.get("/", async (req, res, next) => {
     res.status(500).json({ message: "Failed to load journals" });
   }
 });
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   const { title, content } = req.body;
   try {
     const newJournal = await Journal.create({

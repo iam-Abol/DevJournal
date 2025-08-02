@@ -7,4 +7,5 @@ const JournalSchema = new mongoose.Schema({
     default: () => new Date().toLocaleString(),
   },
 });
-module.exports = mongoose.model("Journal", JournalSchema);
+module.exports.JournalSchema = JournalSchema;
+module.exports.Journal = mongoose.model("Journal", JournalSchema);

@@ -42,7 +42,9 @@ export default function MainApp(params) {
     const fetchJournals = async () => {
       try {
         SET_LOADING(true);
-        const result = await fetch("http://localhost:3000/api/journals");
+        const result = await fetch("http://localhost:3000/api/journals", {
+          credentials: "include",
+        });
         const journals = await result.json();
         console.log(" hrer : ", journals);
         SET_JOURNALS(journals);
