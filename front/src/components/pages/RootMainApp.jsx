@@ -1,3 +1,4 @@
+import Footer from "../Footer";
 import Header from "../header";
 import NewJournal from "../Modals/NewJournal";
 import { Outlet } from "react-router-dom";
@@ -7,6 +8,7 @@ export default function RootMainApp(params) {
       <Header></Header>
       <Outlet />
       <NewJournal></NewJournal>
+      <Footer />
     </div>
   );
 }
