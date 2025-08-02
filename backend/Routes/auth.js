@@ -62,4 +62,8 @@ router.get("/isLoggedIn", authMiddleware, (req, res, next) => {
   // res.send(req.cookies);
   res.status(200).json({ username: req.username, userId: req.userId });
 });
+router.post("/logout", (req, res, next) => {
+  res.clearCookie("token");
+  res.json({ message: "logged out successfully" });
+});
 module.exports = router;

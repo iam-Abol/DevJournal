@@ -2,11 +2,33 @@ import logo from "../assets/logo.jpg";
 
 import { ModalCtx } from "./store/ModalCtx";
 import { useContext } from "react";
-
+import { useDispatch } from "react-redux";
+import { authActions } from "./store/auth";
 export default function Header() {
+  const dispatch = useDispatch();
   const { setNewJournal } = useContext(ModalCtx);
   const handleAddEntryClick = () => {
     setNewJournal();
+  };
+  const handleLogoutClick = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        dispatch(authActions.logout());
+        // optional: navigate("/login"); or show a toast message
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
   return (
     <header>
@@ -29,8 +51,11 @@ export default function Header() {
           >
             + Add Entry
           </button>
-          <button className="border px-4 py-2 text-white rounded hover:text-stone-200">
-            Login / Sign Up
+          <button
+            onClick={handleLogoutClick}
+            className="border px-4 py-2 text-white rounded hover:text-red-500 hover:border-red-600"
+          >
+            LOGOUT
           </button>
         </div>
       </div>
