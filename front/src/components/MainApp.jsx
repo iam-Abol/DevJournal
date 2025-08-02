@@ -5,6 +5,11 @@ import Spinner from "./UI/Spinner";
 import Error from "./Error";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootMainApp from "./pages/RootMainApp";
+import Messages from "./pages/Messages";
+import Saved from "./pages/Saved";
+
+import Settings from "./pages/Settings";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,6 +18,18 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <JournalList></JournalList>,
+      },
+      {
+        path: "messages",
+        element: <Messages />,
+      },
+      {
+        path: "saved",
+        element: <Saved />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
     errorElement: <Error msg={"404 page not found "} />,

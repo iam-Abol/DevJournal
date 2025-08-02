@@ -6,6 +6,8 @@ export default function Footer(params) {
       <div className="h-16 flex justify-around items-center text-gray-500">
         <NavLink
           className={() => "flex flex-col items-center hover:text-blue-500"}
+          to="/"
+          end
         >
           <House />
           <span class="text-xs">Home</span>
@@ -13,18 +15,21 @@ export default function Footer(params) {
 
         <NavLink
           className={() => "flex flex-col items-center hover:text-blue-500"}
+          to="messages"
         >
           <MessagesSquare />
           <span class="text-xs">Messages</span>
         </NavLink>
         <NavLink
           className={() => "flex flex-col items-center hover:text-blue-500"}
+          to="saved"
         >
           <BookMarked />
           <span class="text-xs">Saved</span>
         </NavLink>
         <NavLink
           className={() => "flex flex-col items-center hover:text-blue-500"}
+          to="settings"
         >
           <Settings />
           <span class="text-xs">Settings</span>

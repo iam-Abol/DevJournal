@@ -4,6 +4,7 @@ import { ModalCtx } from "./store/ModalCtx";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "./store/auth";
+import { Plus, LogOut } from "lucide-react";
 export default function Header() {
   const dispatch = useDispatch();
   const { setNewJournal } = useContext(ModalCtx);
@@ -31,32 +32,39 @@ export default function Header() {
     }
   };
   return (
-    <header>
-      <div className="flex justify-between p-4 bg-blue-950">
+    <header className="fixed top-0 right-0 left-0  border-b border-gray-600 bg-white shadow-xl">
+      <div className="flex justify-between items-center p-2 ">
         <div className="flex items-center gap-2 ">
           <img
             srcSet={logo}
             alt=""
             srcset=""
-            className="w-16 h-16 rounded-full"
+            className="w-12 h-12 rounded-full"
           />
-          <h1 className="text-xl font-bold font-serif text-white ">
-            DevJournal
-          </h1>
         </div>
+        <h1 class="text-lg font-semibold text-gray-800">My Journals</h1>
         <div className="flex gap-5 items-center">
-          <button
+          <Plus
+            onClick={handleAddEntryClick}
+            className="text-gray-700 h-8 w-8 hover:text-blue-600"
+          />
+          {/* <button
             className="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600"
             onClick={handleAddEntryClick}
           >
-            + Add Entry
-          </button>
-          <button
+            <Plus /> Add Entry
+          </button> */}
+          <LogOut
+            onClick={handleLogoutClick}
+            className=" text-gray-700 h-7 w-7 hover:text-red-500 "
+          />
+
+          {/* <button
             onClick={handleLogoutClick}
             className="border px-4 py-2 text-white rounded hover:text-red-500 hover:border-red-600"
           >
             LOGOUT
-          </button>
+          </button> */}
         </div>
       </div>
     </header>
