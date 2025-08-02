@@ -1,10 +1,22 @@
-import Header from "./header";
-import NewJournal from "./Modals/NewJournal";
 import JournalList from "./Journal/JournalList";
 import { JournalContext } from "./store/JournalContext";
 import { useContext, useEffect } from "react";
 import Spinner from "./UI/Spinner";
 import Error from "./Error";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RootMainApp from "./pages/RootMainApp";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootMainApp />,
+    children: [
+      {
+        index: true,
+        element: <JournalList></JournalList>,
+      },
+    ],
+  },
+]);
 export default function MainApp(params) {
   const { SET_JOURNALS, SET_LOADING, SET_ERROR, error, loading } =
     useContext(JournalContext);
@@ -30,12 +42,7 @@ export default function MainApp(params) {
   if (error) return <Error msg={error}></Error>;
   return (
     <>
-      <div className="min-h-screen bg-gray-100">
-        <Header></Header>
-
-        <JournalList></JournalList>
-        <NewJournal></NewJournal>
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 }
