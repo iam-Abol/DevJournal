@@ -2,13 +2,21 @@ import { JournalContext } from "../store/JournalContext";
 import { useContext } from "react";
 import Journal from "./Journal";
 import { useLoaderData } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function JournalList() {
   const journals = useLoaderData();
+  console.log(journals);
+  const userId = useSelector((state) => state.auth.userId);
+  // console.log(userId, " hhh ");
 
   return (
     <ul className="flex justify-center py-3 flex-wrap">
       {journals.map((journal) => (
-        <Journal key={journal._id} journal={journal}></Journal>
+        <Journal
+          key={journal._id}
+          journal={journal}
+          isAuthenticated={userId === journal.user?._id}
+        ></Journal>
       ))}
     </ul>
   );

@@ -36,6 +36,7 @@ const router = createBrowserRouter([
         path: "settings",
         element: <Settings />,
       },
+
       {
         path: "add-journal",
         action: async ({ request }) => {

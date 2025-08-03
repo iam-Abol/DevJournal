@@ -5,13 +5,16 @@ const User = require("../modals/User");
 const authMiddleware = require("./middlewares/authMiddleware");
 router.get("/", authMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findById(req.userId).populate({
-      path: "journals",
-      options: { sort: { createdAt: -1 } },
-    });
-    console.log(user);
+    // const user = await User.findById(req.userId).populate({
+    //   path: "journals",
+    //   options: { sort: { createdAt: -1 } },
+    // });
+    // console.log(user);
+    // console.log(journals);
 
-    const journals = user.journals;
+    const journals = await Journal.find()
+      .populate({ path: "user", select: "_id username" })
+      .sort({ createAt: -1 });
     res.status(200).json(journals);
   } catch (error) {
     console.error("Error fetching journals:", error);

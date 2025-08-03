@@ -62,6 +62,8 @@ router.post("/login", async (req, res, next) => {
 });
 router.get("/isLoggedIn", authMiddleware, (req, res, next) => {
   // res.send(req.cookies);
+  // console.log(req.userId);
+
   res.status(200).json({ username: req.username, userId: req.userId });
 });
 router.post("/logout", (req, res, next) => {

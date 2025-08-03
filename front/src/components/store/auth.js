@@ -12,7 +12,7 @@ const authSlice = createSlice({
     login(state, action) {
       state.authMode = "authenticated";
       state.username = action.payload.username;
-      state.userId = action.payload.id;
+      state.userId = action.payload.userId;
     },
     signup(state) {
       state.authMode = "login";

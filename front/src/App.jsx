@@ -22,12 +22,14 @@ function App() {
           method: "GET",
           credentials: "include",
         });
-        console.log("ererre");
+        // console.log("ererre");
         if (!res.ok) {
           dispatch(authActions.signup());
           return;
         }
         const data = await res.json();
+        // console.log("data is ; ", data);
+
         dispatch(
           authActions.login({ userId: data.userId, username: data.username })
         );
@@ -38,7 +40,7 @@ function App() {
     };
     getAuthStatus();
   }, []);
-  console.log(authMode);
+  // console.log(authMode);
 
   if (authMode === "signup") return <Signup></Signup>;
   if (authMode === "login") return <Login />;
