@@ -1,4 +1,4 @@
-import JournalList from "./Journal/JournalList";
+import JournalList, { loader as journalsLoader } from "./Journal/JournalList";
 import { JournalContext } from "./store/JournalContext";
 import { useContext, useEffect } from "react";
 import Spinner from "./UI/Spinner";
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <JournalList></JournalList>,
+        loader: journalsLoader,
       },
       {
         path: "messages",
@@ -36,30 +37,30 @@ const router = createBrowserRouter([
   },
 ]);
 export default function MainApp(params) {
-  const { SET_JOURNALS, SET_LOADING, SET_ERROR, error, loading } =
-    useContext(JournalContext);
-  useEffect(() => {
-    const fetchJournals = async () => {
-      try {
-        SET_LOADING(true);
-        const result = await fetch("http://localhost:3000/api/journals", {
-          credentials: "include",
-        });
-        const journals = await result.json();
-        console.log(" hrer : ", journals);
-        SET_JOURNALS(journals);
-      } catch (err) {
-        console.log("Failed to load journals", err);
-        SET_ERROR(err.message);
-      } finally {
-        SET_LOADING(false);
-      }
-    };
-    fetchJournals();
-  }, []);
+  // const { SET_JOURNALS, SET_LOADING, SET_ERROR, error, loading } =
+  //   useContext(JournalContext);
+  // useEffect(() => {
+  //   const fetchJournals = async () => {
+  //     try {
+  //       SET_LOADING(true);
+  //       const result = await fetch("http://localhost:3000/api/journals", {
+  //         credentials: "include",
+  //       });
+  //       const journals = await result.json();
+  //       console.log(" hrer : ", journals);
+  //       SET_JOURNALS(journals);
+  //     } catch (err) {
+  //       console.log("Failed to load journals", err);
+  //       SET_ERROR(err.message);
+  //     } finally {
+  //       SET_LOADING(false);
+  //     }
+  //   };
+  //   fetchJournals();
+  // }, []);
 
-  if (loading) return <Spinner />;
-  if (error) return <Error msg={error}></Error>;
+  // if (loading) return <Spinner />;
+  // if (error) return <Error msg={error}></Error>;
   return (
     <>
       <RouterProvider router={router} />

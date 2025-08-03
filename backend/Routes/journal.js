@@ -5,7 +5,10 @@ const User = require("../modals/User");
 const authMiddleware = require("./middlewares/authMiddleware");
 router.get("/", authMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findById(req.userId).populate("journals");
+    const user = await User.findById(req.userId).populate({
+      path: "journals",
+      options: { sort: { createdAt: -1 } },
+    });
     console.log(user);
 
     const journals = user.journals;
@@ -19,10 +22,17 @@ router.get("/", authMiddleware, async (req, res, next) => {
 router.post("/", authMiddleware, async (req, res, next) => {
   const { title, content } = req.body;
   try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     const newJournal = await Journal.create({
       title,
       content,
+      user: user._id,
     });
+    user.journals.push(newJournal._id);
+    await user.save();
     res.status(201).json(newJournal);
   } catch (error) {
     console.error("Error adding to journals:", error);

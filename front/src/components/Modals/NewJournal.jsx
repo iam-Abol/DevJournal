@@ -21,6 +21,7 @@ export default function NewJournal({}) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ title, content }),
       });
       if (!res.ok) throw new Error("failed to add ::  / ?");

@@ -21,7 +21,7 @@ export default function Signup({}) {
         body: JSON.stringify({ email, username, password }),
       });
       if (!res.ok) throw new Error("failed to signup");
-      dispatch(authActions.signup);
+      dispatch(authActions.signup());
     } catch (err) {
       SET_ERROR(err.message);
     }

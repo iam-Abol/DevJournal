@@ -22,6 +22,9 @@ const authSlice = createSlice({
       state.username = "";
       state.userId = "";
     },
+    setSignup(state) {
+      state.authMode = "signup";
+    },
   },
 });
 export default authSlice.reducer;

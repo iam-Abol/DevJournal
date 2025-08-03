@@ -1,8 +1,9 @@
 import { JournalContext } from "../store/JournalContext";
 import { useContext } from "react";
 import Journal from "./Journal";
+import { useLoaderData } from "react-router-dom";
 export default function JournalList() {
-  const { journals } = useContext(JournalContext);
+  const journals = useLoaderData();
 
   return (
     <ul className="flex justify-center py-3 flex-wrap">
@@ -12,3 +13,17 @@ export default function JournalList() {
     </ul>
   );
 }
+export const loader = async ({}) => {
+  try {
+    const result = await fetch("http://localhost:3000/api/journals", {
+      credentials: "include",
+    });
+    if (!result.ok) {
+      throw new Response("failed to load journals", { status: 401 });
+    }
+    const data = await result.json();
+    return data;
+  } catch (err) {
+    throw new Response("failed to get to db", { status: 500 });
+  }
+};

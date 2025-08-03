@@ -6,6 +6,7 @@ const JournalSchema = new mongoose.Schema({
     type: String,
     default: () => new Date().toLocaleString(),
   },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 module.exports.JournalSchema = JournalSchema;
 module.exports.Journal = mongoose.model("Journal", JournalSchema);

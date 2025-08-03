@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 import { House } from "lucide-react";
 export default function Error({ msg }) {
+  const error = useRouteError();
+  // console.log(error, error.statusText);
+  if (error.data) msg = error.data;
   return (
     <div
       id="alert-2"

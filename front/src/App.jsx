@@ -38,6 +38,7 @@ function App() {
     };
     getAuthStatus();
   }, []);
+  console.log(authMode);
 
   if (authMode === "signup") return <Signup></Signup>;
   if (authMode === "login") return <Login />;

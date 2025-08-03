@@ -32,7 +32,9 @@ function Login({}) {
     }
   };
   const [state, formAction] = useActionState(action, null);
-
+  const handleSignupPage = () => {
+    dispatch(authActions.setSignup());
+  };
   return (
     <div className="bg-blue">
       <div className="flex min-h-screen bg-white">
@@ -71,6 +73,15 @@ function Login({}) {
                 type="submit"
               >
                 LOGIN
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={handleSignupPage}
+                className="block  p-5 text-center text-gray-800  text-xs "
+              >
+                create an account?
               </button>
             </div>
           </form>
