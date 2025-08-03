@@ -13,7 +13,7 @@ import Messages from "./pages/Messages";
 import Saved from "./pages/Saved";
 
 import Settings from "./pages/Settings";
-
+import { action as addJournalAction } from "./Modals/NewJournal";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,32 +39,7 @@ const router = createBrowserRouter([
 
       {
         path: "add-journal",
-        action: async ({ request }) => {
-          const formData = await request.formData();
-          const title = formData.get("title");
-          const content = formData.get("content");
-          try {
-            const res = await fetch("http://localhost:3000/api/journals", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-              body: JSON.stringify({ title, content }),
-            });
-            if (!res.ok)
-              throw new Response("failed to add journal ::  / ?", {
-                status: 500,
-              });
-
-            return redirect("/");
-          } catch (err) {
-            console.error("Action error:", err);
-            throw new Response("Something went wrong: " + err.message, {
-              status: 500,
-            });
-          }
-        },
+        action: addJournalAction,
       },
     ],
     errorElement: <Error msg={"404 page not found "} />,

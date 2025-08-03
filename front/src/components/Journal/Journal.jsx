@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { JournalContext } from "../store/JournalContext";
+import { Link } from "react-router-dom";
 export default function Journal({ journal, isAuthenticated }) {
   const { DELETE_ENTRY } = useContext(JournalContext);
   const handleDeleteClick = () => {
