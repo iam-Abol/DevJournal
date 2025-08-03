@@ -3,7 +3,11 @@ import { JournalContext } from "./store/JournalContext";
 import { useContext, useEffect } from "react";
 import Spinner from "./UI/Spinner";
 import Error from "./Error";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import RootMainApp from "./pages/RootMainApp";
 import Messages from "./pages/Messages";
 import Saved from "./pages/Saved";
@@ -31,6 +35,35 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "add-journal",
+        action: async ({ request }) => {
+          const formData = await request.formData();
+          const title = formData.get("title");
+          const content = formData.get("content");
+          try {
+            const res = await fetch("http://localhost:3000/api/journals", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+              body: JSON.stringify({ title, content }),
+            });
+            if (!res.ok)
+              throw new Response("failed to add journal ::  / ?", {
+                status: 500,
+              });
+
+            return redirect("/");
+          } catch (err) {
+            console.error("Action error:", err);
+            throw new Response("Something went wrong: " + err.message, {
+              status: 500,
+            });
+          }
+        },
       },
     ],
     errorElement: <Error msg={"404 page not found "} />,

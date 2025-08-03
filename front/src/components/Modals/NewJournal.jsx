@@ -2,46 +2,52 @@ import Modal from "./Modal";
 import { useActionState, useContext } from "react";
 import { ModalCtx } from "../store/ModalCtx";
 import { JournalContext } from "../store/JournalContext";
-
+import { useFetcher, redirect } from "react-router-dom";
 export default function NewJournal({}) {
   const { modal, clear } = useContext(ModalCtx);
   // console.log(modal);
-  const { ADD_ENTRY, DELETE_ENTRY } = useContext(JournalContext);
+  // const { ADD_ENTRY, DELETE_ENTRY } = useContext(JournalContext);
   /////////////////////////////////////////
-  const submitEntry = async (prevState, formData) => {
-    const title = formData.get("title");
-    const content = formData.get("content");
-    const _id = new Date().toISOString();
-    const createdAt = new Date().toLocaleString();
-    console.log(title + content);
-    ADD_ENTRY({ title, content, _id, createdAt });
-    try {
-      const res = await fetch("http://localhost:3000/api/journals", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ title, content }),
-      });
-      if (!res.ok) throw new Error("failed to add ::  / ?");
-      const realJournal = await res.json();
-      DELETE_ENTRY(_id);
-      ADD_ENTRY(realJournal);
-    } catch (err) {
-      DELETE_ENTRY(_id);
-      SET_ERROR(err.message);
-    }
-  };
+  // const submitEntry = async (prevState, formData) => {
+  //   const title = formData.get("title");
+  //   const content = formData.get("content");
+  //   const _id = new Date().toISOString();
+  //   const createdAt = new Date().toLocaleString();
+  //   console.log(title + content);
+  //   ADD_ENTRY({ title, content, _id, createdAt });
+  //   try {
+  //     const res = await fetch("http://localhost:3000/api/journals", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include",
+  //       body: JSON.stringify({ title, content }),
+  //     });
+  //     if (!res.ok) throw new Error("failed to add ::  / ?");
+  //     const realJournal = await res.json();
+  //     DELETE_ENTRY(_id);
+  //     ADD_ENTRY(realJournal);
+  //   } catch (err) {
+  //     DELETE_ENTRY(_id);
+  //     SET_ERROR(err.message);
+  //   }
+  // };
 
   const handleCancelClick = () => {
     clear();
   };
 
-  const [messages, formAction, isPending] = useActionState(submitEntry, null);
+  // const [messages, formAction, isPending] = useActionState(submitEntry, null);
+  const fetcher = useFetcher();
   return (
     <Modal open={modal === "NEW_JOURNAL"}>
-      <form action={formAction} onSubmit={() => clear()} className="p-0">
+      <fetcher.Form
+        action="add-journal"
+        onSubmit={() => clear()}
+        className="p-0"
+        method="POST"
+      >
         <div className="mt-5">
           <label htmlFor="title" className="">
             Title
@@ -83,7 +89,7 @@ export default function NewJournal({}) {
             SAVE
           </button>
         </div>
-      </form>
+      </fetcher.Form>
     </Modal>
   );
 }
