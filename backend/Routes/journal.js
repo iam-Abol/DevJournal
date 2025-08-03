@@ -22,6 +22,20 @@ router.get("/", authMiddleware, async (req, res, next) => {
     res.status(500).json({ message: "Failed to load journals" });
   }
 });
+router.get("/:journalId", async (req, res, next) => {
+  const { journalId } = req.params;
+  // res.send(journalId);
+  try {
+    const journal = await Journal.findById(journalId);
+    if (!journal) return res.status(404).json({ message: "journal not found" });
+    const { _id, title, content } = journal;
+    res.status(200).json({ _id, content, title });
+  } catch (error) {
+    console.error("Error fetching journal:", error);
+
+    res.status(500).json({ message: "Failed to load journal " + journalId });
+  }
+});
 router.post("/", authMiddleware, async (req, res, next) => {
   const { title, content } = req.body;
   try {
