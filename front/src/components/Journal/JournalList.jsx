@@ -5,7 +5,7 @@ import { useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function JournalList() {
   const journals = useLoaderData();
-  console.log(journals);
+  // console.log(journals);
   const userId = useSelector((state) => state.auth.userId);
   // console.log(userId, " hhh ");
 

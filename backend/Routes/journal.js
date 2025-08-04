@@ -47,6 +47,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       title,
       content,
       user: user._id,
+      image: "",
     });
     user.journals.push(newJournal._id);
     await user.save();

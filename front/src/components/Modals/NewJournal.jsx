@@ -47,6 +47,7 @@ export default function NewJournal({}) {
         onSubmit={() => clear()}
         className="p-0"
         method="POST"
+        encType="multipart/form-data"
       >
         <div className="mt-5">
           <label htmlFor="title" className="">
@@ -58,9 +59,20 @@ export default function NewJournal({}) {
             placeholder="Title"
             name="title"
             required
+            id="title"
           />
         </div>
-
+        <div className="mt-5">
+          <label htmlFor="image" className="">
+            image
+          </label>
+          <input
+            type="file"
+            className="block w-full rounded border border-gray-300 p-2 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:outline-none"
+            name="image"
+            required
+          />
+        </div>
         <div className="mt-5">
           <label htmlFor="content" className="">
             {" "}
@@ -97,6 +109,8 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const title = formData.get("title");
   const content = formData.get("content");
+  console.log(formData.get("image"));
+
   try {
     const res = await fetch("http://localhost:3000/api/journals", {
       method: "POST",
