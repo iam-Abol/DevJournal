@@ -38,6 +38,8 @@ router.get("/:journalId", async (req, res, next) => {
 });
 router.post("/", authMiddleware, async (req, res, next) => {
   const { title, content } = req.body;
+  console.log(req.file);
+
   try {
     const user = await User.findById(req.userId);
     if (!user) {

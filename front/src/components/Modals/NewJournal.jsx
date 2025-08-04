@@ -106,19 +106,22 @@ export default function NewJournal({}) {
   );
 }
 export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const title = formData.get("title");
-  const content = formData.get("content");
-  console.log(formData.get("image"));
+  const fd = await request.formData();
+  // const title = fd.get("title");
+  // const content = fd.get("content");
+  // const image = fd.get("image");
+  // console.log(fd.get("image"));
 
   try {
     const res = await fetch("http://localhost:3000/api/journals", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       credentials: "include",
-      body: JSON.stringify({ title, content }),
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+      // credentials: "include",
+      // body: JSON.stringify({ title, content, image }),
+      body: fd,
     });
     if (!res.ok)
       throw new Response("failed to add journal ::  / ?", {
