@@ -12,9 +12,14 @@ export default function Journal({ journal, isAuthenticated }) {
 
   return (
     <>
-      <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition">
-        <section>
-          <img src={imageUrl} alt={journal.title} srcset="" />
+      <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition-transform duration-300 hover:scale-105 ease-in-out">
+        <section className="w-2/6 mr-3">
+          <img
+            className="w-full   object-cover h-40 rounded-md shadow-sm border"
+            src={imageUrl}
+            alt={journal.title}
+            srcset=""
+          />
           {/* <div>fdasfdff</div> */}
         </section>
         <div className="flex-1">
