@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { JournalContext } from "../store/JournalContext";
 import { Link } from "react-router-dom";
+
+import { BookMarked } from "lucide-react";
+import { useFetcher } from "react-router-dom";
 export default function Journal({ journal, isAuthenticated }) {
   const { DELETE_ENTRY } = useContext(JournalContext);
   const handleDeleteClick = () => {
@@ -8,8 +11,8 @@ export default function Journal({ journal, isAuthenticated }) {
   };
   // console.log(journal);
   const imageUrl = "http://localhost:3000/" + journal.image;
-  console.log(imageUrl + " -- ");
-
+  // console.log(imageUrl + " -- ");
+  const fetcher = useFetcher();
   return (
     <>
       <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition-transform duration-300 hover:scale-105 ease-in-out">
@@ -40,7 +43,7 @@ export default function Journal({ journal, isAuthenticated }) {
             more details →{" "}
           </Link>
         </div>
-        <div className="">
+        <div className="flex flex-col items-end justify-between">
           {isAuthenticated && (
             <div className="flex flex-col  ">
               <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 mb-3 py-1 rounded text-sm">
@@ -54,6 +57,11 @@ export default function Journal({ journal, isAuthenticated }) {
               </button>{" "}
             </div>
           )}
+          <fetcher.Form action={`/journals/${journal._id}/save`} method="post">
+            <button>
+              <BookMarked className="hover:text-blue-500" />
+            </button>
+          </fetcher.Form>
         </div>
       </div>
     </>

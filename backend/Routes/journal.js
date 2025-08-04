@@ -60,4 +60,20 @@ router.post("/", authMiddleware, async (req, res, next) => {
     res.status(500).json({ message: "Failed to add a journal" });
   }
 });
+router.post("/:journalId/saved", authMiddleware, async (req, res, next) => {
+  const { journalId } = req.params;
+  try {
+    const journal = await Journal.findById(journalId);
+    if (!journal)
+      return res.status(404).json({ message: "Journal not found :(" });
+    const user = await User.findById(req.userId);
+    user.saved.push(journalId);
+    await user.save();
+    res.status(201).json({ message: "Journal added to saved successfully" });
+  } catch (error) {
+    console.error("Error adding  journal to saved", error);
+
+    res.status(500).json({ message: "Failed to add journal to Saved" });
+  }
+});
 module.exports = router;

@@ -41,6 +41,14 @@ const router = createBrowserRouter([
         path: "add-journal",
         action: addJournalAction,
       },
+      {
+        path: "journals/:journalId/save",
+        action: ({ params }) => {
+          console.log(params);
+
+          console.log("here in saving  apost action");
+        },
+      },
     ],
     errorElement: <Error msg={"404 page not found "} />,
   },

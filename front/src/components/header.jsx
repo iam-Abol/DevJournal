@@ -46,7 +46,7 @@ export default function Header() {
         <div className="flex gap-5 items-center">
           <Plus
             onClick={handleAddEntryClick}
-            className="text-gray-700 h-8 w-8 hover:text-blue-600"
+            className="transition-transform hover:rotate-90 hover:scale-125 duration-300 text-gray-700 h-8 w-8 hover:text-blue-600"
           />
           {/* <button
             className="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600"
@@ -56,7 +56,7 @@ export default function Header() {
           </button> */}
           <LogOut
             onClick={handleLogoutClick}
-            className=" text-gray-700 h-7 w-7 hover:text-red-500 "
+            className="transition-transform hover:scale-75 mr-2 duration-300 text-gray-700 h-7 w-7 hover:text-red-500 "
           />
 
           {/* <button
