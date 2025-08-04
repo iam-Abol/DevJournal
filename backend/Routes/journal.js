@@ -3,6 +3,7 @@ const router = express.Router();
 const { Journal } = require("../modals/journal");
 const User = require("../modals/User");
 const authMiddleware = require("./middlewares/authMiddleware");
+const mongoose = require("mongoose");
 router.get("/", authMiddleware, async (req, res, next) => {
   try {
     // const user = await User.findById(req.userId).populate({
@@ -63,10 +64,19 @@ router.post("/", authMiddleware, async (req, res, next) => {
 router.post("/:journalId/saved", authMiddleware, async (req, res, next) => {
   const { journalId } = req.params;
   try {
+    if (!mongoose.Types.ObjectId.isValid(journalId)) {
+      return res.status(400).json({ message: "Invalid journal ID" });
+    }
     const journal = await Journal.findById(journalId);
     if (!journal)
       return res.status(404).json({ message: "Journal not found :(" });
     const user = await User.findById(req.userId);
+    if (!user)
+      return res
+        .status(401)
+        .json({ message: "User not found or not authenticated" });
+    if (user.journals.includes(journalId))
+      return res.status(200).json({ message: "Journal is already saved" });
     user.saved.push(journalId);
     await user.save();
     res.status(201).json({ message: "Journal added to saved successfully" });
