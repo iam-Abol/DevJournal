@@ -107,10 +107,6 @@ export default function NewJournal({}) {
 }
 export const action = async ({ request }) => {
   const fd = await request.formData();
-  // const title = fd.get("title");
-  // const content = fd.get("content");
-  // const image = fd.get("image");
-  // console.log(fd.get("image"));
 
   try {
     const res = await fetch("http://localhost:3000/api/journals", {

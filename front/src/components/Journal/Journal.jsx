@@ -6,12 +6,16 @@ export default function Journal({ journal, isAuthenticated }) {
   const handleDeleteClick = () => {
     DELETE_ENTRY(journal._id);
   };
+  // console.log(journal);
+  const imageUrl = "http://localhost:3000/" + journal.image;
+  console.log(imageUrl + " -- ");
+
   return (
     <>
       <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition">
         <section>
-          {/* <img src="" alt="" srcset="" />
-          <div>fdasfdff</div> */}
+          <img src={imageUrl} alt={journal.title} srcset="" />
+          {/* <div>fdasfdff</div> */}
         </section>
         <div className="flex-1">
           <div className="flex justify-between ">

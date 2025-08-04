@@ -7,7 +7,7 @@ const authRoutes = require("./Routes/auth");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-
+const path = require("path");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -39,9 +39,13 @@ app.use(
   multer({
     storage,
     fileFilter,
+    limits: {
+      fileSize: 1024 * 1024 * 5,
+    },
   }).single("image")
 );
 app.use(cookieParser());
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/journals", journalRoutes);
 app.use("/api/auth", authRoutes);
 mongoose.connect("mongodb://127.0.0.1:27017/devJournal").then(() => {

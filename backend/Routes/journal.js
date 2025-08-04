@@ -39,7 +39,7 @@ router.get("/:journalId", async (req, res, next) => {
 router.post("/", authMiddleware, async (req, res, next) => {
   const { title, content } = req.body;
   console.log(req.file);
-
+  const image = req.file.path;
   try {
     const user = await User.findById(req.userId);
     if (!user) {
@@ -49,7 +49,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       title,
       content,
       user: user._id,
-      image: "",
+      image,
     });
     user.journals.push(newJournal._id);
     await user.save();
