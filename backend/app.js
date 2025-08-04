@@ -17,7 +17,17 @@ const storage = multer.diskStorage({
     cb(null, fileName);
   },
 });
-
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error("Unsupported file type"), false);
+  }
+};
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -25,7 +35,12 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(multer({ storage }).single("image"));
+app.use(
+  multer({
+    storage,
+    fileFilter,
+  }).single("image")
+);
 app.use(cookieParser());
 app.use("/api/journals", journalRoutes);
 app.use("/api/auth", authRoutes);
