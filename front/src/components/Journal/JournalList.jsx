@@ -3,6 +3,7 @@ import { useContext } from "react";
 import Journal from "./Journal";
 import { useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Spinner from "../UI/Spinner";
 export default function JournalList() {
   const journals = useLoaderData();
   // console.log(journals);
@@ -10,15 +11,19 @@ export default function JournalList() {
   // console.log(userId, " hhh ");
 
   return (
-    <ul className="flex justify-center py-3 flex-wrap">
-      {journals.map((journal) => (
-        <Journal
-          key={journal._id}
-          journal={journal}
-          isAuthenticated={userId === journal.user?._id}
-        ></Journal>
-      ))}
-    </ul>
+    <>
+      (
+      <ul className="flex justify-center py-3 flex-wrap">
+        {journals.map((journal) => (
+          <Journal
+            key={journal._id}
+            journal={journal}
+            isAuthenticated={userId === journal.user?._id.toString()}
+          ></Journal>
+        ))}
+      </ul>
+      )
+    </>
   );
 }
 export const loader = async ({}) => {
