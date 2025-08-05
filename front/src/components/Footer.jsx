@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { House, BookMarked, Settings, MessagesSquare } from "lucide-react";
 export default function Footer(params) {
-  let NavLinkStyles = "flex flex-col items-center hover:text-blue-500";
+  let NavLinkStyles =
+    "flex flex-col items-center hover:text-blue-500 duration-200";
   let activeClasses = " text-blue-800";
 
   return (

@@ -32,7 +32,7 @@ export default function Header() {
     }
   };
   return (
-    <header className=" top-0 right-0 left-0  border-b border-gray-600 bg-white shadow-xl mb-1">
+    <header className=" top-0 right-0 left-0  border-b border-gray-600 bg-white shadow-xl ">
       <div className="flex justify-between items-center p-2 ">
         <div className="flex items-center gap-2 ">
           <img

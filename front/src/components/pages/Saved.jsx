@@ -1,3 +1,4 @@
+import Spinner from "../UI/Spinner";
 export default function Saved({}) {
-  return <div>Saved</div>;
+  return <Spinner />;
 }

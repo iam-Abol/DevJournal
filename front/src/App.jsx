@@ -48,6 +48,7 @@ function App() {
     <>
       <JournalContextProvider>
         <ModalCtxProvider>
+          {/* <Spinner/> */}
           <MainApp />
         </ModalCtxProvider>
       </JournalContextProvider>
