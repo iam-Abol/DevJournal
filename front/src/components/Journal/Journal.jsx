@@ -13,9 +13,15 @@ export default function Journal({ journal, isAuthenticated }) {
   const imageUrl = "http://localhost:3000/" + journal.image;
   // console.log(imageUrl + " -- ");
   const fetcher = useFetcher();
+  let saveIconStyles =
+    "hover:text-blue-500 transition-transform duration-300 hover:scale-110";
+  if (journal.isSaved) {
+    saveIconStyles =
+      "text-red-500  transition-transform duration-300 hover:scale-75";
+  }
   return (
     <>
-      <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition-transform duration-300 hover:scale-105 ease-in-out">
+      <div className="bg-white flex  rounded-lg shadow-md w-[90%] border p-5 px-6 border-gray-500 hover mb-5 hover:shadow-lg transition-transform duration-300 hover:scale-[102%] ease-in-out">
         <section className="w-2/6 mr-3">
           <img
             className="w-full   object-cover h-40 rounded-md shadow-sm border"
@@ -59,7 +65,7 @@ export default function Journal({ journal, isAuthenticated }) {
           )}
           <fetcher.Form action={`/journals/${journal._id}/save`} method="post">
             <button>
-              <BookMarked className="hover:text-blue-500" />
+              <BookMarked className={saveIconStyles} />
             </button>
           </fetcher.Form>
         </div>

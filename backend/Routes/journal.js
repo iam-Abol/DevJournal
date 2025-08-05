@@ -5,18 +5,37 @@ const User = require("../modals/User");
 const authMiddleware = require("./middlewares/authMiddleware");
 const mongoose = require("mongoose");
 router.get("/", authMiddleware, async (req, res, next) => {
+  const userId = req.userId;
   try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res
+        .status(401)
+        .json({ message: "Invalid user ID not authenticated" });
+    }
+    const user = await User.findById(userId);
+    if (!user)
+      return res
+        .status(401)
+        .json({ message: "User not found or not authenticated" });
     // const user = await User.findById(req.userId).populate({
     //   path: "journals",
     //   options: { sort: { createdAt: -1 } },
     // });
     // console.log(user);
     // console.log(journals);
+    const savedSet = new Set(user.saved.map((id) => id.toString()));
+    console.log(savedSet);
 
     const journals = await Journal.find()
       .populate({ path: "user", select: "_id username" })
-      .sort({ createAt: -1 });
-    res.status(200).json(journals);
+      .sort({ createAt: -1 })
+      .lean();
+    // console.log(journals);
+
+    const journalsWithSaved = journals.map((journal) => {
+      return { ...journal, isSaved: savedSet.has(journal._id.toString()) };
+    });
+    res.status(200).json(journalsWithSaved);
   } catch (error) {
     console.error("Error fetching journals:", error);
 
