@@ -127,3 +127,24 @@ module.exports.postSaved = async (req, res, next) => {
     res.status(500).json({ message: "Failed to add journal to Saved" });
   }
 };
+module.exports.getSaved = async (req, res, next) => {
+  const userId = req.userId;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res
+        .status(401)
+        .json({ message: "Invalid user ID not authenticated" });
+    }
+    const user = await User.findById(userId).populate("saved").lean();
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: "User not found or not authenticated" });
+
+    res.status(200).json(user.saved || []);
+  } catch (error) {
+    console.error("Error fetching saved journals:", error);
+
+    res.status(500).json({ message: "Failed to load saved journals" });
+  }
+};

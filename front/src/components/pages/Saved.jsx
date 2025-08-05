@@ -4,18 +4,18 @@ import axios from "axios";
 import Journal from "../Journal/Journal";
 
 export default function Saved({}) {
-  const { data, isLoading, isEnabled, error } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
       try {
         const saved = await axios.get(
-          "http://localhost:3000/api/journals/saved",
+          "http://localhost:3000/api/journals/saed",
           { withCredentials: true }
         );
         // console.log(saved);
 
         return saved.data;
       } catch (error) {
-        throw new Response("failed to get saved journals", {
+        throw new Error("failed to get saved journals", {
           status: 500,
         });
       }
@@ -25,6 +25,8 @@ export default function Saved({}) {
   // console.log(data);
 
   if (isLoading) return <Spinner />;
+  if (isError) return <p>{error.message}</p>;
+
   if (data)
     return (
       <ul className="flex justify-center py-3 flex-wrap">

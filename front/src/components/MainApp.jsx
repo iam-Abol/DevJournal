@@ -60,7 +60,7 @@ const router = createBrowserRouter([
                 status: 500,
               });
 
-            return redirect("/");
+            // return redirect("/");
           } catch (err) {
             console.error("Action error:", err);
             throw new Response("Something went wrong: " + err.message, {
