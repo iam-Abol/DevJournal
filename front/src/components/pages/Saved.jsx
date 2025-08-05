@@ -40,3 +40,32 @@ export default function Saved({}) {
       </ul>
     );
 }
+
+///////////////////
+///////////////////
+
+export const postToSavedAction = async ({ params }) => {
+  const { journalId } = params;
+  console.log(journalId);
+
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/journals/${journalId}/saved`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+    if (!res.ok)
+      throw new Response("failed to add journal to saved", {
+        status: 500,
+      });
+
+    // return redirect("/");
+  } catch (err) {
+    console.error("Action error:", err);
+    throw new Response("Something went wrong: " + err.message, {
+      status: 500,
+    });
+  }
+};

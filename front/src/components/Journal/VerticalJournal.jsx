@@ -5,7 +5,7 @@ export default function Journal({ journal, isAuthenticated }) {
 
   return (
     <>
-      <div className="bg-white flex flex-col rounded-lg shadow-md w-full sm:w-[48%] md:w-[30%] border p-5 px-6 border-gray-300 hover:shadow-lg transition-transform duration-300 hover:scale-[102%]">
+      <div className="bg-white flex flex-col rounded-lg shadow-md w-full sm:w-[48%] md:w-[30%] border p-5 px-6 border-gray-300 hover:shadow-lg transition-transform duration-300 hover:scale-[102%] mb-4">
         <section className="w-full mb-3">
           <img
             className="w-full object-cover h-40 rounded-md shadow-sm border"
@@ -27,17 +27,6 @@ export default function Journal({ journal, isAuthenticated }) {
             more details →
           </Link>
         </div>
-
-        {isAuthenticated && (
-          <div className="mt-4 flex gap-2 self-end">
-            <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm">
-              Edit
-            </button>
-            <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
-              Delete
-            </button>
-          </div>
-        )}
       </div>
     </>
   );

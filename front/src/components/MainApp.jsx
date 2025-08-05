@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import RootMainApp from "./pages/RootMainApp";
 import Messages from "./pages/Messages";
-import Saved from "./pages/Saved";
+import Saved, { postToSavedAction } from "./pages/Saved";
 import Settings from "./pages/Settings";
 import { action as addJournalAction } from "./Modals/NewJournal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -43,31 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "journals/:journalId/save",
-        action: async ({ params }) => {
-          const { journalId } = params;
-          console.log(journalId);
-
-          try {
-            const res = await fetch(
-              `http://localhost:3000/api/journals/${journalId}/saved`,
-              {
-                method: "POST",
-                credentials: "include",
-              }
-            );
-            if (!res.ok)
-              throw new Response("failed to add journal to saved", {
-                status: 500,
-              });
-
-            // return redirect("/");
-          } catch (err) {
-            console.error("Action error:", err);
-            throw new Response("Something went wrong: " + err.message, {
-              status: 500,
-            });
-          }
-        },
+        action: postToSavedAction,
       },
     ],
     errorElement: <Error msg={"404 page not found "} />,
