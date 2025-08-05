@@ -6,9 +6,6 @@ const authMiddleware = require("./middlewares/authMiddleware");
 const mongoose = require("mongoose");
 const journalController = require("../controllers/journal");
 router.get("/", authMiddleware, journalController.getJournals);
-router.get("/:journalId", authMiddleware, journalController.getJournalById);
-router.post("/", authMiddleware, journalController.postJournals);
-router.post("/:journalId/saved", authMiddleware, journalController.postSaved);
 
 router.get("/saved", authMiddleware, async (req, res, next) => {
   const userId = req.userId;
@@ -31,4 +28,8 @@ router.get("/saved", authMiddleware, async (req, res, next) => {
     res.status(500).json({ message: "Failed to load saved journals" });
   }
 });
+router.get("/:journalId", authMiddleware, journalController.getJournalById);
+router.post("/", authMiddleware, journalController.postJournals);
+
+router.post("/:journalId/saved", authMiddleware, journalController.postSaved);
 module.exports = router;
