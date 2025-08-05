@@ -62,7 +62,8 @@ router.post("/", authMiddleware, async (req, res, next) => {
   }
 });
 router.post("/:journalId/saved", authMiddleware, async (req, res, next) => {
-  const { journalId } = req.params;
+  let { journalId } = req.params;
+
   try {
     if (!mongoose.Types.ObjectId.isValid(journalId)) {
       return res.status(400).json({ message: "Invalid journal ID" });
@@ -75,8 +76,31 @@ router.post("/:journalId/saved", authMiddleware, async (req, res, next) => {
       return res
         .status(401)
         .json({ message: "User not found or not authenticated" });
-    if (user.journals.includes(journalId))
-      return res.status(200).json({ message: "Journal is already saved" });
+
+    // console.log(user.saved);
+    // console.log(journalId);
+    const foundJournalIndex = user.saved.findIndex(
+      (id) => id.toString() === journalId
+    );
+    console.log(foundJournalIndex);
+    if (foundJournalIndex >= 0) {
+      user.saved.splice(foundJournalIndex, 1);
+      await user.save();
+      return res.status(200).json({ message: "Journal is removed from saved" });
+    }
+    // if (user.saved.includes(journalId)) {
+
+    //   user.saved.filter((id) => {
+    //     console.log(id, " + ", journalId, id.toString() == journalId);
+
+    //     return id.toString() !== journalId;
+    //   });
+    //   await user.save();
+    //   console.log(user.saved);
+
+    //   return res.status(200).json({ message: "Journal is removed from saved" });
+    // }
+
     user.saved.push(journalId);
     await user.save();
     res.status(201).json({ message: "Journal added to saved successfully" });

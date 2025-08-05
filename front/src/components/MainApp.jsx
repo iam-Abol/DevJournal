@@ -1,7 +1,5 @@
 import JournalList, { loader as journalsLoader } from "./Journal/JournalList";
-import { JournalContext } from "./store/JournalContext";
-import { useContext, useEffect } from "react";
-import Spinner from "./UI/Spinner";
+
 import Error from "./Error";
 import {
   createBrowserRouter,
@@ -11,9 +9,11 @@ import {
 import RootMainApp from "./pages/RootMainApp";
 import Messages from "./pages/Messages";
 import Saved from "./pages/Saved";
-
 import Settings from "./pages/Settings";
 import { action as addJournalAction } from "./Modals/NewJournal";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,10 +43,30 @@ const router = createBrowserRouter([
       },
       {
         path: "journals/:journalId/save",
-        action: ({ params }) => {
-          console.log(params);
+        action: async ({ params }) => {
+          const { journalId } = params;
+          console.log(journalId);
 
-          console.log("here in saving  apost action");
+          try {
+            const res = await fetch(
+              `http://localhost:3000/api/journals/${journalId}/saved`,
+              {
+                method: "POST",
+                credentials: "include",
+              }
+            );
+            if (!res.ok)
+              throw new Response("failed to add journal to saved", {
+                status: 500,
+              });
+
+            return redirect("/");
+          } catch (err) {
+            console.error("Action error:", err);
+            throw new Response("Something went wrong: " + err.message, {
+              status: 500,
+            });
+          }
         },
       },
     ],
@@ -80,7 +100,10 @@ export default function MainApp(params) {
   // if (error) return <Error msg={error}></Error>;
   return (
     <>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        {" "}
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   );
 }
