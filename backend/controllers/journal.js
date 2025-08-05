@@ -42,12 +42,20 @@ module.exports.getJournals = async (req, res, next) => {
 };
 module.exports.getJournalById = async (req, res, next) => {
   const { journalId } = req.params;
-  // res.send(journalId);
+  const userId = req.userId;
   try {
+    if (!mongoose.Types.ObjectId.isValid(journalId)) {
+      return res.status(400).json({ message: "Invalid journal ID " });
+    }
+    const user = await User.findById(userId);
+    if (!user)
+      return res
+        .status(401)
+        .json({ message: "User not found or not authenticated" });
+
     const journal = await Journal.findById(journalId);
     if (!journal) return res.status(404).json({ message: "journal not found" });
-    const { _id, title, content } = journal;
-    res.status(200).json({ _id, content, title });
+    res.status(200).json(journal);
   } catch (error) {
     console.error("Error fetching journal:", error);
 
