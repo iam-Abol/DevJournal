@@ -21,7 +21,7 @@ export default function Journal({ journal, isAuthenticated }) {
           <p className="mt-4 line-clamp-4 text-gray-700">{journal.content}</p>
 
           <Link
-            to={`journals/${journal._id}`}
+            to={`/journals/${journal._id}`}
             className="mt-2 inline-block text-sm text-blue-600 hover:underline hover:text-blue-800"
           >
             more details →

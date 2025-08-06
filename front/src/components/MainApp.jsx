@@ -12,6 +12,7 @@ import Saved, { postToSavedAction } from "./pages/Saved";
 import Settings from "./pages/Settings";
 import { action as addJournalAction } from "./Modals/NewJournal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import JournalDetails from "./Journal/JournalDetails";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         action: addJournalAction,
       },
       {
+        path: "journals/:journalId",
+        element: <JournalDetails />,
+      },
+      {
         path: "journals/:journalId/save",
         action: postToSavedAction,
       },
@@ -50,30 +55,6 @@ const router = createBrowserRouter([
   },
 ]);
 export default function MainApp(params) {
-  // const { SET_JOURNALS, SET_LOADING, SET_ERROR, error, loading } =
-  //   useContext(JournalContext);
-  // useEffect(() => {
-  //   const fetchJournals = async () => {
-  //     try {
-  //       SET_LOADING(true);
-  //       const result = await fetch("http://localhost:3000/api/journals", {
-  //         credentials: "include",
-  //       });
-  //       const journals = await result.json();
-  //       console.log(" hrer : ", journals);
-  //       SET_JOURNALS(journals);
-  //     } catch (err) {
-  //       console.log("Failed to load journals", err);
-  //       SET_ERROR(err.message);
-  //     } finally {
-  //       SET_LOADING(false);
-  //     }
-  //   };
-  //   fetchJournals();
-  // }, []);
-
-  // if (loading) return <Spinner />;
-  // if (error) return <Error msg={error}></Error>;
   return (
     <>
       <QueryClientProvider client={queryClient}>
