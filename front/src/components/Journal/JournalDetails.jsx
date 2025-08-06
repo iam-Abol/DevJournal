@@ -17,7 +17,7 @@ export default function JournalDetails() {
           `http://localhost:3000/api/journals/${journalId}`,
           { withCredentials: true }
         );
-        return res.data._doc;
+        return res.data;
       } catch (error) {
         throw new Error("failed to load journal " + error.message);
       }
