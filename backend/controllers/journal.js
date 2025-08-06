@@ -22,7 +22,7 @@ module.exports.getJournals = async (req, res, next) => {
     // console.log(user);
     // console.log(journals);
     const savedSet = new Set(user.saved.map((id) => id.toString()));
-    console.log(savedSet);
+    // console.log(savedSet);
 
     const journals = await Journal.find()
       .populate({ path: "user", select: "_id username" })
@@ -43,6 +43,8 @@ module.exports.getJournals = async (req, res, next) => {
 module.exports.getJournalById = async (req, res, next) => {
   const { journalId } = req.params;
   const userId = req.userId;
+  console.log(journalId, "here we go");
+
   try {
     if (!mongoose.Types.ObjectId.isValid(journalId)) {
       return res.status(400).json({ message: "Invalid journal ID " });
@@ -68,7 +70,7 @@ module.exports.getJournalById = async (req, res, next) => {
 };
 module.exports.postJournals = async (req, res, next) => {
   const { title, content } = req.body;
-  console.log(req.file);
+  // console.log(req.file);
   const image = req.file.path;
   try {
     const user = await User.findById(req.userId);
@@ -111,7 +113,7 @@ module.exports.postSaved = async (req, res, next) => {
     const foundJournalIndex = user.saved.findIndex(
       (id) => id.toString() === journalId
     );
-    console.log(foundJournalIndex);
+    // console.log(foundJournalIndex);
     if (foundJournalIndex >= 0) {
       user.saved.splice(foundJournalIndex, 1);
       await user.save();
