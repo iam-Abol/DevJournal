@@ -55,7 +55,11 @@ module.exports.getJournalById = async (req, res, next) => {
 
     const journal = await Journal.findById(journalId);
     if (!journal) return res.status(404).json({ message: "journal not found" });
-    res.status(200).json(journal);
+    const journalWithIsSaved = {
+      ...journal,
+      isSaved: user.saved.some((id) => id.toString() === journalId),
+    };
+    res.status(200).json(journalWithIsSaved);
   } catch (error) {
     console.error("Error fetching journal:", error);
 
