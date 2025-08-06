@@ -1,6 +1,7 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import Spinner from "../UI/Spinner";
 export default function JournalDetails() {
   const { journalId } = useParams();
@@ -30,7 +31,12 @@ export default function JournalDetails() {
   const imageUrl = "http://localhost:3000/" + journal.image;
 
   return (
-    <div className="max-w-2xl mx-auto shadow bg-slate-100 mt-5 mb-20 p-5 rounded-xl">
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "spring", ease: "easeIn", duration: 1 }}
+      className="max-w-2xl mx-auto shadow bg-slate-100 mt-5 mb-20 p-5 rounded-xl"
+    >
       <h1 className="font-bold text-3xl mb-3">{journal.title}</h1>
       <p className="mb-2 text-gray-500 text-sm">{journal.createdAt}</p>
       {journal.image && (
@@ -41,6 +47,6 @@ export default function JournalDetails() {
       )}
       <p className="text-lg text-gray-800">{journal.content}</p>
       {/* for checking is auth and adding edit and delete button */}
-    </div>
+    </motion.div>
   );
 }

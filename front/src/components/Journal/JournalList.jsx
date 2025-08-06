@@ -13,7 +13,7 @@ export default function JournalList() {
   return (
     <>
       (
-      <ul className="flex justify-center py-3 flex-wrap">
+      <ul className="flex justify-center py-3 flex-wrap ">
         {journals.map((journal) => (
           <Journal
             key={journal._id}

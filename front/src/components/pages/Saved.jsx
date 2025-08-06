@@ -1,7 +1,7 @@
 import Spinner from "../UI/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Journal from "../Journal/Journal";
+import { motion } from "framer-motion";
 import VerticalJournal from "../Journal/VerticalJournal";
 export default function Saved({}) {
   const { data, isLoading, isError, error } = useQuery({
@@ -29,7 +29,7 @@ export default function Saved({}) {
 
   if (data)
     return (
-      <ul className="flex justify-around w-full py-3 flex-wrap items-center ">
+      <ul className="flex justify-around w-full pt-3 pb-20 flex-wrap items-center h-full ">
         {data.map((journal) => (
           <VerticalJournal
             key={journal._id}
