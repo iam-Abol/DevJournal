@@ -30,11 +30,16 @@ export default function JournalDetails() {
   const imageUrl = "http://localhost:3000/" + journal.image;
 
   return (
-    <div>
-      <h1>{journal.title}</h1>
-      {/* <p>{new Date(journal.createdAt).toLocaleString()}</p> */}
-      {journal.image && <img src={imageUrl} />}
-      <p>{journal.content}</p>
+    <div className="max-w-2xl mx-auto shadow bg-slate-100 mt-5 mb-20 p-5 rounded-xl">
+      <h1 className="font-bold text-3xl mb-3">{journal.title}</h1>
+      <p className="mb-2 text-gray-500 text-sm">{journal.createdAt}</p>
+      {journal.image && (
+        <img
+          className="w-full h-auto object-cover rounded-lg  mb-4"
+          src={imageUrl}
+        />
+      )}
+      <p className="text-lg text-gray-800">{journal.content}</p>
       {/* for checking is auth and adding edit and delete button */}
     </div>
   );
