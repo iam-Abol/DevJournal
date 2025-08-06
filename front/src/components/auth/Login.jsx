@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth";
 import { JournalContext } from "../store/JournalContext";
 import { useContext } from "react";
+import { motion } from "framer-motion";
 function Login({}) {
   const dispatch = useDispatch();
   const { SET_ERROR } = useContext(JournalContext);
@@ -68,21 +69,30 @@ function Login({}) {
             </div>
 
             <div className="mt-10">
-              <button
+              <motion.button
+                initial={{ scale: 0.5 }}
+                // animate={{ scale: [0.8, 1, 1.02, 1] }}
+                animate={{ scale: 1 }}
+                whileHover={{
+                  backgroundColor: "#038525",
+                  scale: 1.02,
+                  y: 2,
+                }}
                 className="w-full rounded bg-green-500 py-3 text-white hover:bg-green-600"
                 type="submit"
               >
                 LOGIN
-              </button>
+              </motion.button>
             </div>
             <div className="flex justify-center">
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.2, color: "#850303" }}
                 onClick={handleSignupPage}
                 className="block  p-5 text-center text-gray-800  text-xs "
               >
                 create an account?
-              </button>
+              </motion.button>
             </div>
           </form>
         </div>
