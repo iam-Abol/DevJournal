@@ -13,18 +13,27 @@ import Settings from "./pages/Settings";
 import { action as addJournalAction } from "./Modals/NewJournal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import JournalDetails from "./Journal/JournalDetails";
-const queryClient = new QueryClient();
+import axios from "axios";
+import { getIsLoggedIn } from "./util";
+import Login from "./auth/Login";
 
 const router = createBrowserRouter([
   {
+    path: "/auth/login",
+
+    element: <Login />,
+  },
+  {
     path: "/",
     element: <RootMainApp />,
+    loader: getIsLoggedIn,
     children: [
       {
         index: true,
         element: <JournalList></JournalList>,
         loader: journalsLoader,
       },
+
       {
         path: "messages",
         element: <Messages />,
@@ -54,6 +63,7 @@ const router = createBrowserRouter([
     errorElement: <Error msg={"404 page not found "} />,
   },
 ]);
+export const queryClient = new QueryClient();
 export default function MainApp(params) {
   return (
     <>

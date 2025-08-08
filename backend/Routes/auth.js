@@ -63,6 +63,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/isLoggedIn", authMiddleware, (req, res, next) => {
   // res.send(req.cookies);
   // console.log(req.userId);
+  // console.log("hre in is logged in");
 
   res.status(200).json({ username: req.username, userId: req.userId });
 });

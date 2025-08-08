@@ -11,39 +11,39 @@ import Login from "./components/auth/Login";
 import { useContext, useEffect } from "react";
 import { authActions } from "./components/store/auth";
 function App() {
-  // console.log("herer");
-  const authMode = useSelector((state) => state.auth.authMode);
-  const dispatch = useDispatch();
+  console.log("herer");
+  // const authMode = useSelector((state) => state.auth.authMode);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getAuthStatus = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/auth/isLoggedIn", {
-          method: "GET",
-          credentials: "include",
-        });
-        // console.log("ererre");
-        if (!res.ok) {
-          dispatch(authActions.signup());
-          return;
-        }
-        const data = await res.json();
-        // console.log("data is ; ", data);
+  // useEffect(() => {
+  //   const getAuthStatus = async () => {
+  //     try {
+  //       const res = await fetch("http://localhost:3000/api/auth/isLoggedIn", {
+  //         method: "GET",
+  //         credentials: "include",
+  //       });
+  //       // console.log("ererre");
+  //       if (!res.ok) {
+  //         dispatch(authActions.signup());
+  //         return;
+  //       }
+  //       const data = await res.json();
+  //       // console.log("data is ; ", data);
 
-        dispatch(
-          authActions.login({ userId: data.userId, username: data.username })
-        );
-      } catch (err) {
-        console.log("failed to check loggedIN");
-        console.log(err.message);
-      }
-    };
-    getAuthStatus();
-  }, []);
+  //       dispatch(
+  //         authActions.login({ userId: data.userId, username: data.username })
+  //       );
+  //     } catch (err) {
+  //       console.log("failed to check loggedIN");
+  //       console.log(err.message);
+  //     }
+  //   };
+  //   getAuthStatus();
+  // }, []);
   // console.log(authMode);
 
-  if (authMode === "signup") return <Signup></Signup>;
-  if (authMode === "login") return <Login />;
+  // if (authMode === "signup") return <Signup></Signup>;
+  // if (authMode === "login") return <Login />;
   return (
     <>
       <JournalContextProvider>

@@ -4,6 +4,8 @@ import Journal from "./Journal";
 import { useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Spinner from "../UI/Spinner";
+import { queryClient } from "../MainApp";
+
 export default function JournalList() {
   const journals = useLoaderData();
   // console.log(journals);

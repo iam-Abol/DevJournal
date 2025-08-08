@@ -4,9 +4,11 @@ import { authActions } from "../store/auth";
 import { JournalContext } from "../store/JournalContext";
 import { useContext } from "react";
 import { motion } from "framer-motion";
+import { redirect, useNavigate } from "react-router-dom";
 function Login({}) {
-  const dispatch = useDispatch();
-  const { SET_ERROR } = useContext(JournalContext);
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const { SET_ERROR } = useContext(JournalContext);
   const action = async (state, fd) => {
     const password = fd.get("password");
     const email = fd.get("email");
@@ -22,14 +24,14 @@ function Login({}) {
         body: JSON.stringify({ email, password }),
       });
       if (!res.ok) throw new Error("failed to login");
-      dispatch(
-        authActions.login({ username: res.username, userId: res.userId })
-      );
+      console.log("jere");
+
+      return navigate("/");
     } catch (err) {
       console.log("front login error");
       console.log(err.message);
 
-      SET_ERROR(err.message);
+      // SET_ERROR(err.message);
     }
   };
   const [state, formAction] = useActionState(action, null);
