@@ -13,6 +13,7 @@ export default function RootMainApp(params) {
     queryFn: getIsLoggedIn,
     staleTime: 1 * 60 * 1000,
     gcTime: 5 * 60 * 1000,
+    initialData: loaderData,
   });
   console.log(isLoading + " **");
   console.log(data);

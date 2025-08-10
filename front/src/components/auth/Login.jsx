@@ -35,9 +35,10 @@ function Login({}) {
     }
   };
   const [state, formAction] = useActionState(action, null);
-  const handleSignupPage = () => {
-    dispatch(authActions.setSignup());
-  };
+  // const handleSignupPage = () => {
+  //   // dispatch(authActions.setSignup());
+
+  // };
   return (
     <div className="bg-blue">
       <div className="flex min-h-screen bg-white">
@@ -90,7 +91,11 @@ function Login({}) {
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.2, color: "#850303" }}
-                onClick={handleSignupPage}
+                onClick={() => {
+                  // console.log("herer");
+
+                  return navigate("/auth/signup");
+                }}
                 className="block  p-5 text-center text-gray-800  text-xs "
               >
                 create an account?

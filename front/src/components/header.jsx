@@ -5,12 +5,14 @@ import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "./store/auth";
 import { Plus, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 export default function Header() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { setNewJournal } = useContext(ModalCtx);
   const handleAddEntryClick = () => {
     setNewJournal();
   };
+  const navigate = useNavigate();
   const handleLogoutClick = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/auth/logout", {
@@ -22,8 +24,9 @@ export default function Header() {
       });
 
       if (res.ok) {
-        dispatch(authActions.logout());
-        // optional: navigate("/login"); or show a toast message
+        // dispatch(authActions.logout());
+        // later will navigate to a home page those page with image on top :)
+        navigate("/auth/login");
       } else {
         console.error("Logout failed");
       }

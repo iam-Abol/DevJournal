@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 import Spinner from "../UI/Spinner";
 export default function JournalDetails() {
@@ -25,6 +25,7 @@ export default function JournalDetails() {
     },
   });
   console.log(journal);
+  const data = useRouteLoaderData("rootMainApp");
 
   if (isError) return <p>eroor failed to load + {error.message}</p>;
   if (isLoading) return <Spinner />;
@@ -46,6 +47,7 @@ export default function JournalDetails() {
         />
       )}
       <p className="text-lg text-gray-800">{journal.content}</p>
+      {journal.user === data.userId && <p>hello u made this</p>}
       {/* for checking is auth and adding edit and delete button */}
     </motion.div>
   );

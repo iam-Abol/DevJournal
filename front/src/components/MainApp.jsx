@@ -16,17 +16,21 @@ import JournalDetails from "./Journal/JournalDetails";
 import axios from "axios";
 import { getIsLoggedIn } from "./util";
 import Login from "./auth/Login";
+import Signup from "./auth/Signup";
 export const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
-    path: "/auth/login",
-
-    element: <Login />,
+    path: "/auth",
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+    ],
   },
   {
     path: "/",
     element: <RootMainApp />,
     loader: getIsLoggedIn,
+    id: "rootMainApp",
     children: [
       {
         index: true,

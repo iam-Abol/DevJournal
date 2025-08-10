@@ -14,7 +14,6 @@ export default function JournalList() {
 
   return (
     <>
-      (
       <ul className="flex justify-center py-3 flex-wrap ">
         {journals.map((journal) => (
           <Journal
@@ -24,7 +23,6 @@ export default function JournalList() {
           ></Journal>
         ))}
       </ul>
-      )
     </>
   );
 }

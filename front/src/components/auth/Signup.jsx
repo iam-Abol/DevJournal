@@ -4,7 +4,9 @@ import { JournalContext } from "../store/JournalContext";
 import { authActions } from "../store/auth";
 
 import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 export default function Signup({}) {
+  const navigate = useNavigate();
   const { SET_ERROR } = useContext(JournalContext);
   const dispatch = useDispatch();
   const action = async (state, fn) => {
@@ -21,14 +23,14 @@ export default function Signup({}) {
         body: JSON.stringify({ email, username, password }),
       });
       if (!res.ok) throw new Error("failed to signup");
-      dispatch(authActions.signup());
+      return navigate("/");
     } catch (err) {
       SET_ERROR(err.message);
     }
   };
-  const handleLoginpage = () => {
-    dispatch(authActions.signup());
-  };
+  // const handleLoginpage = () => {
+  //   dispatch(authActions.signup());
+  // };
   const [state, formAction] = useActionState(action, null);
   return (
     <>
@@ -90,7 +92,9 @@ export default function Signup({}) {
             </form>
             <div className="flex justify-center">
               <button
-                onClick={handleLoginpage}
+                onClick={() => {
+                  navigate("/auth/login");
+                }}
                 className="block  p-5 text-center text-gray-800  text-xs "
               >
                 Already have an account?

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Journal({ journal, isAuthenticated }) {
   const imageUrl = "http://localhost:3000/" + journal.image;
+  // console.log(data);
+  // console.log(journal);
 
   return (
     <>
