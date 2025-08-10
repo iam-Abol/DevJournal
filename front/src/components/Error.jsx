@@ -1,9 +1,18 @@
-import { Link, useRouteError } from "react-router-dom";
+import { Link, Navigate, useRouteError } from "react-router-dom";
 import { House } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 export default function Error({ msg }) {
+  const navigate = useNavigate();
   const error = useRouteError();
-  // console.log(error, error.statusText);
-  if (error.data) msg = error.data;
+  console.log(error, error.statusText);
+  if (error.message) msg = error.message;
+  // useEffect(() => {
+  //   if (error && error.status == 401) navigate("/auth/login");
+  // }, []);
+  //
+  if (error && error.status == 401)
+    return <Navigate to="/auth/login" replace />;
   return (
     <div
       id="alert-2"

@@ -11,7 +11,7 @@ import Login from "./components/auth/Login";
 import { useContext, useEffect } from "react";
 import { authActions } from "./components/store/auth";
 function App() {
-  console.log("herer");
+  // console.log("herer");
   // const authMode = useSelector((state) => state.auth.authMode);
   // const dispatch = useDispatch();
 

@@ -16,7 +16,7 @@ import JournalDetails from "./Journal/JournalDetails";
 import axios from "axios";
 import { getIsLoggedIn } from "./util";
 import Login from "./auth/Login";
-
+export const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/auth/login",
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     errorElement: <Error msg={"404 page not found "} />,
   },
 ]);
-export const queryClient = new QueryClient();
+
 export default function MainApp(params) {
   return (
     <>
