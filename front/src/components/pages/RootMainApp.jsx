@@ -7,7 +7,8 @@ import { getIsLoggedIn } from "../util";
 import Login from "../auth/Login";
 import Spinner from "../UI/Spinner";
 export default function RootMainApp(params) {
-  const { data, isLoading, isError, Error } = useQuery({
+  const loaderData = useLoaderData();
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["auth"],
     queryFn: getIsLoggedIn,
     staleTime: 1 * 60 * 1000,
@@ -17,6 +18,7 @@ export default function RootMainApp(params) {
   console.log(data);
   // if (data.error?.status == 401) return <Login />;
   if (isLoading) return <Spinner />;
+  if (isError) throw new Error(error.message);
   return (
     <div className="min-h-screen bg-gray-100">
       <Header></Header>
