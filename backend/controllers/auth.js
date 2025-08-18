@@ -1,3 +1,7 @@
+const bcrypt = require("bcrypt");
+const User = require("../modals/User");
+const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 module.exports.getIsLoggedIn = (req, res, next) => {
   // res.send(req.cookies);
   // console.log(req.userId);
@@ -47,6 +51,26 @@ module.exports.postLogin = async (req, res, next) => {
 };
 module.exports.postSignUp = async (req, res, next) => {
   const { email, username, password } = req.body;
+  const errors = validationResult(req);
+  //   console.log(errors);
+  //   res.send("");
+  console.log(
+    errors.array().map((err) => ({
+      field: err.path,
+      message: err.msg,
+    }))
+  );
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      status: "error",
+      type: "validation",
+      errors: errors.array().map((err) => ({
+        field: err.param,
+        message: err.msg,
+      })),
+    });
+  }
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
