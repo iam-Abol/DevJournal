@@ -1,14 +1,15 @@
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useContext } from "react";
 import { JournalContext } from "../store/JournalContext";
 import { authActions } from "../store/auth";
-
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 export default function Signup({}) {
   const navigate = useNavigate();
   const { SET_ERROR } = useContext(JournalContext);
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
   const action = async (state, fn) => {
     const email = fn.get("email");
     const username = fn.get("username");
@@ -22,18 +23,29 @@ export default function Signup({}) {
         },
         body: JSON.stringify({ email, username, password }),
       });
-      if (!res.ok) throw new Error("failed to signup");
+      // console.log(res);
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok) throw data;
+      setError(null);
       return navigate("/");
     } catch (err) {
-      SET_ERROR(err.message);
+      // console.log(err);
+      setError(err);
+      // throw new Error(err);
     }
   };
-  // const handleLoginpage = () => {
-  //   dispatch(authActions.signup());
-  // };
+
   const [state, formAction] = useActionState(action, null);
+  console.log(error);
+  let content = null;
+  if (error?.type == "validation")
+    content = error.errors.map((err) => <p>{err.message}</p>);
+
   return (
     <>
+      {content}
       <div className="bg-blue">
         <div className="flex min-h-screen bg-white">
           <div className="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
