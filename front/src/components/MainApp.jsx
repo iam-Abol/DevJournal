@@ -1,6 +1,6 @@
 import JournalList, { loader as journalsLoader } from "./Journal/JournalList";
 
-import Error from "./Error";
+import Error from "./Error/Error";
 import {
   createBrowserRouter,
   redirect,
